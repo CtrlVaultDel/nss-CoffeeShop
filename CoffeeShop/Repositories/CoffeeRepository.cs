@@ -104,7 +104,17 @@ namespace CoffeeShop.Repositories
         {
             using (var conn = Connection)
             {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INPUT INTO Coffee (Title, BeanVarietyId) 
+                                        OUTPUT INSERTED.ID
+                                        VALUES (@title, @beanVarietyId)";
+                    cmd.Parameters.AddWithValue("@title", coffee.Title);
+                    cmd.Parameters.AddWithValue("@beanVarietyId", coffee.BeanVarietyId);
 
+                    coffee.Id = (int)cmd.ExecuteScalar();
+                }
             }
         }
 
