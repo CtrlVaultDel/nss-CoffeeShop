@@ -30,6 +30,7 @@ namespace CoffeeShop
 
             services.AddControllers();
             services.AddTransient<IBeanVarietyRepository, BeanVarietyRepository>();
+            services.AddTransient<ICoffeeRepository, CoffeeRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoffeeShop", Version = "v1" });

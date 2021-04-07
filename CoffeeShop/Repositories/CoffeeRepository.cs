@@ -47,6 +47,7 @@ namespace CoffeeShop.Repositories
                             BeanVarietyId = reader.GetInt32(reader.GetOrdinal("BeanVarietyId")),
                             BeanVariety = new BeanVariety()
                             {
+                                Id = reader.GetInt32(reader.GetOrdinal("BeanVarietyId")),
                                 Name = reader.GetString(reader.GetOrdinal("Name")),
                                 Region = reader.GetString(reader.GetOrdinal("Region"))
                             }
@@ -93,6 +94,7 @@ namespace CoffeeShop.Repositories
                             BeanVarietyId = reader.GetInt32(reader.GetOrdinal("BeanVarietyId")),
                             BeanVariety = new BeanVariety()
                             {
+                                Id = reader.GetInt32(reader.GetOrdinal("BeanVarietyId")),
                                 Name = reader.GetString(reader.GetOrdinal("Name")),
                                 Region = reader.GetString(reader.GetOrdinal("Region"))
                             }
