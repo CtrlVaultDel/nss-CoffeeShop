@@ -30,11 +30,14 @@ namespace CoffeeShop.Repositories
                                         FROM Coffee c 
                                         JOIN BeanVariety bv 
                                         ON c.BeanVarietyId = bv.Id";
+
                     var reader = cmd.ExecuteReader();
 
                     // Create a List to hold the Coffee Objects
                     var allCoffee = new List<Coffee>();
 
+                    // As long as the reader detects another row, continue making 
+                    // coffee objects and storing them into the allCoffee List.
                     while (reader.Read())
                     {
                         var coffee = new Coffee()
@@ -72,10 +75,15 @@ namespace CoffeeShop.Repositories
                                         JOIN BeanVariety bv 
                                         ON c.BeanVarietyId = bv.Id
                                         WHERE c.Id = @coffeeId";
+
                     cmd.Parameters.AddWithValue("@coffeeId", coffeeId);
                     var reader = cmd.ExecuteReader();
 
                     Coffee coffee = null;
+
+                    // If the reader detects a row of data to pull, it will overwrite
+                    // the empty Coffee object. If there is no data based off the query,
+                    // the Coffee object will be returned as null.
                     if (reader.Read())
                     {
                         coffee = new Coffee()
@@ -110,6 +118,7 @@ namespace CoffeeShop.Repositories
                     cmd.CommandText = @"INPUT INTO Coffee (Title, BeanVarietyId) 
                                         OUTPUT INSERTED.ID
                                         VALUES (@title, @beanVarietyId)";
+
                     cmd.Parameters.AddWithValue("@title", coffee.Title);
                     cmd.Parameters.AddWithValue("@beanVarietyId", coffee.BeanVarietyId);
 
@@ -122,7 +131,19 @@ namespace CoffeeShop.Repositories
         {
             using (var conn = Connection)
             {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Coffee
+                                        SET Title = @title
+                                            BeanVarietyId = @beanVarietyId
+                                        WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@title", coffee.Title);
+                    cmd.Parameters.AddWithValue("@beanVarietyId", coffee.BeanVarietyId);
+                    cmd.Parameters.AddWithValue("@id", coffee.Id);
 
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
