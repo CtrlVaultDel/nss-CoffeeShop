@@ -7,11 +7,24 @@
     <link rel="stylesheet" href="main.css">
     <title>Coffee Shop</title>
 </head>
-<body>
+<body class="container">
    <button id="run-button">Run It!</button>
-   <button id="add-bean-button">Add New Bean!</button>
-   <section class="form_container">
-        <!-- Form will populate here -->
+   <section class="bean-form_container">
+        <form>
+            <div>
+                <label for="name">Bean Name: <abbr title="required" aria-label="required">*</abbr></label>
+                <input id="bean--name" type="text" name="name">
+            </div>
+            <div>
+                <label for="region">Bean Region: <abbr title="required" aria-label="required">*</abbr></label>
+                <input id="bean--region" type="text" name="region">
+            </div>
+            <div>
+                <label for="notes">Bean Notes: </label>
+                <input id="bean--notes" type="textbox" name="notes">
+            </div>
+        <button id="saveBean">Save Bean</button>
+        </form>
    </section>
    <section class="bean_container">
         <!-- Beans will populate here -->

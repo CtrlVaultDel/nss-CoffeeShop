@@ -2,8 +2,9 @@ const beanUrl = "https://localhost:5001/api/beanvariety/";
 const coffeeUrl = "https://localhost:5001/api/coffee/";
 
 // Document Targets
+const saveBeanButton = document.getElementById('saveBean');
 const beanTarget = document.querySelector('.bean_container');
-const formTarget = document.querySelector('.form_container');
+const beanFormTarget = document.querySelector('.bean_form_container');
 const coffeeTarget = document.querySelector('.coffee_container');
 
 // Add an event listener for the initial button
@@ -14,12 +15,6 @@ runButton.addEventListener("click", () => {
             beanTarget.innerHTML = listBeanVarieties(beanVarieties);
         })
 });
-
-// Add an event listener onto the button that will allow the user to add a new coffee bean
-const addBeanButton = document.querySelector("#add-bean-button");
-addBeanButton.addEventListener("click", () => {
-    formTarget.innerHTML = beanInputForm();
-})
 
 // Gets all Bean Varieties from the server
 const getAllBeanVarieties = () => fetch(beanUrl).then(resp => resp.json());
@@ -47,28 +42,43 @@ const verifyNote = (note) => {
     return "N/A";
 }
 
-const beanInputForm = () => {
-    return `
-    <form>
-        <fieldset>
-            <div>
-                <label for="name">Bean Name: <abbr title="required" aria-label="required">*</abbr></label>
-                <input id="name" type="text" name="name">
-            </div>
-        </fieldset>
-        <fieldset>
-            <div>
-                <label for="region">Bean Region: <abbr title="required" aria-label="required">*</abbr></label>
-                <input id="region" type="text" name="region">
-            </div>
-        </fieldset>
-        <fieldset>
-            <div>
-                <label for="notes">Bean Notes: </label>
-                <input id="notes" type="textbox" name="notes">
-            </div>
-        </fieldset>
-        <button type ="submit">Add Bean</button>
-    </form>
-    `
-}
+// Saves new notes to the API
+const saveBean = bean => {
+    return fetch(beanUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(bean)
+    })
+};
+
+// Listen for a bean to be saved and attempt to post the new bean if it is clicked.
+saveBeanButton.addEventListener("click", e => {
+    // Save DOM elements to local variables
+    let name = document.getElementById("bean--name").value;
+    let region = document.getElementById("bean--region").value;
+    let notes = document.getElementById("bean--notes").value;
+    if(notes === ""){
+        notes = null;
+    }
+    if (name.length > 3 && name.length < 50 && region.length > 3 && region.length && region.length < 255){
+        // Make a new object representation of a bean
+        const newBean = {
+            name,
+            region,
+            notes
+        };
+
+        // Change API state and application state
+        saveBean(newBean);
+
+        // Clear the form
+        beanFormTarget.clear();
+
+        e.preventDefault();
+    }
+    else{
+        alert("Please enter a 3-50 character name and 3-255 character region. Notes are optional.");
+    }
+})
