@@ -1,0 +1,17 @@
+b {
+	font-size: 1.3em;
+}
+
+.bean_container {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.bean {
+	margin: 5px;
+	padding: 5px;
+	outline: 5px black;
+	width: 170px;
+	border: solid black 1px;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Coffee Shop</title>
+</head>
+<body class="container">
+   <button id="run-button">Run It!</button>
+   <section class="bean-form_container">
+        <form>
+            <div>
+                <label for="name">Bean Name: <abbr title="required" aria-label="required">*</abbr></label>
+                <input id="bean--name" type="text" name="name">
+            </div>
+            <div>
+                <label for="region">Bean Region: <abbr title="required" aria-label="required">*</abbr></label>
+                <input id="bean--region" type="text" name="region">
+            </div>
+            <div>
+                <label for="notes">Bean Notes: </label>
+                <input id="bean--notes" type="textbox" name="notes">
+            </div>
+        <button id="saveBean">Save Bean</button>
+        </form>
+   </section>
+   <section class="bean_container">
+        <!-- Beans will populate here -->
+   </section>
+   <section class="coffee_container">
+        <!-- Coffee will populate here -->
+   </section>
+   <script src="main.js"></script>
+</body>
+</html>
